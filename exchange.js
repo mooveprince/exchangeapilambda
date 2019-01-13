@@ -1,39 +1,60 @@
-var request = require('request');
+var rp = require('request-promise');
 
-module.exports.getRate = (event, context, callback) => {
-  console.log ("Request for Exchange Rate" + JSON.stringify(event));
+var getExchangeRate = function (conversionBetween) {
 
-  var requestObj = {
+  var options = {
+    uri: `http://free.currencyconverterapi.com/api/v3/convert?q=${conversionBetween}&compact=y`,
+    json: true
   }
 
-  var response = { 
-  };
+  return rp (options)
+    .then (exchangeResult => {
+        console.log ("Success response sent for currency exchange")
+        let exchange = exchangeResult[conversionBetween];
+        exchange.val = exchange.val.toFixed(2);
+        return exchange;
+        //res.json ({'status': 'success', 'exchangeRate': exchange});
+    })
+    .catch (err => {
+      console.log (`Error in calling API ${err}`);
+      return err;
+      //res.json ({'status': 'failure', 'description': err});
+    }); 
 
-  var conversionBetween = event.rateBetween;
+}
+
+module.exports.getRate = (event, context, callback) => {
+
+  var conversionBetween = event.queryStringParameters.rateBetween;
+
+  var response = { 
+    statusCode: 200,
+    body: {
+    }
+  };
 
   if (!conversionBetween) {
     var error = "The countries for which exchange has to be calculated was not given";
     console.log (error);
     response.statusCode = 1002;
-    response.descripiton = error;
+    response.body.descripiton = error;
     callback (null, response);
   } else {
-    requestObj.url = `http://free.currencyconverterapi.com/api/v3/convert?q=${conversionBetween}&compact=y`;
-    request (requestObj, function (error, res, body) {
-      if (error) {
+    var apiResult = getExchangeRate (conversionBetween);
+
+    apiResult
+      .then (data=> {
+        response.statusCode = 200;
+        response.body.exchangeRate = data;
+        callback (null, response);
+      })
+      .catch (err => {
         console.log ("error occurred while making the call to get Exchange Rate API ")
         response.statusCode = 1001;
-        response.descripiton = error;
-        callback (null, response);      
-      } else if (res.statusCode == 200 ) {
-        console.log ("Exchange Value has been retrived" );
-        response.statusCode = 200;
-        var valueFromApiInJson = JSON.parse(body);
-        var toBeFormatted =  valueFromApiInJson[conversionBetween];
-        response.exchangeRate = toBeFormatted.val.toFixed(2);
+        response.body.descripiton = error;        
         callback (null, response);
-      }
-    });
+      })
+
   }
-  
-};
+
+}
