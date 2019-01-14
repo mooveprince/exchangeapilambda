@@ -9,7 +9,6 @@ describe('transferApi', function() {
 			.event()
 			.expectResult((result) => {
                 expect( result.statusCode).to.be.equal(200);
-                expect( result.body.exchangeRateList).to.exist;
             });
 	});
 

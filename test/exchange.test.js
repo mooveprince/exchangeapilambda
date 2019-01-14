@@ -12,7 +12,6 @@ describe('exchangeApi', function() {
 			})
 			.expectResult((result) => {
 				expect( result.statusCode).to.be.equal(200);
-                expect( result.body.exchangeRate).to.exist;
             });
 	});
 
@@ -25,8 +24,6 @@ describe('exchangeApi', function() {
 			})
 			.expectResult((result ) => {
 				expect(result.statusCode).to.be.equal(1002);
-                expect( result.body.descripiton.length).to.be.above(0);
-
             });		
 	})
 

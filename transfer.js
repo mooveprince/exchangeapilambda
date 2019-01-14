@@ -37,7 +37,8 @@ module.exports.getRate =  (event, context, callback) => {
 
   apiResult.then(data => {
     response.statusCode = 200;
-    response.body.exchangeRateList = data;
+    output = { "transfer between": "USD to INR", "exchangeRateList" : data };
+    response.body = JSON.stringify(output);
     callback (null, response);
   });
 

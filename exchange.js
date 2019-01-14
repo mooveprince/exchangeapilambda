@@ -37,7 +37,9 @@ module.exports.getRate = (event, context, callback) => {
     var error = "The countries for which exchange has to be calculated was not given";
     console.log (error);
     response.statusCode = 1002;
-    response.body.descripiton = error;
+    output = {"descripiton" : error};
+    
+    response.body = JSON.stringify(output);
     callback (null, response);
   } else {
     var apiResult = getExchangeRate (conversionBetween);
@@ -45,13 +47,16 @@ module.exports.getRate = (event, context, callback) => {
     apiResult
       .then (data=> {
         response.statusCode = 200;
-        response.body.exchangeRate = data;
+        output = { "conversionBetween":conversionBetween, "exchangeRate" : data.val };
+        response.body = JSON.stringify(output);
         callback (null, response);
       })
       .catch (err => {
         console.log ("error occurred while making the call to get Exchange Rate API ")
         response.statusCode = 1001;
-        response.body.descripiton = error;        
+        output = {"descripiton" : error};
+    
+        response.body = JSON.stringify(output);       
         callback (null, response);
       })
 
