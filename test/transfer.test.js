@@ -1,6 +1,6 @@
 var expect = require( 'chai' ).expect;
 var LambdaTester = require( 'lambda-tester' ).noVersionCheck();
-var transferApi = require( '../transfer' ).getRate;
+var transferApi = require( '../transfer-from-usa' ).getRate;
 
 describe('transferApi', function() {
     it( 'test success', function() {

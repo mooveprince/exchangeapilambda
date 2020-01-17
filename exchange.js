@@ -2,8 +2,10 @@ var rp = require('request-promise');
 
 var getExchangeRate = function (conversionBetween) {
 
+  var apiKey = process.env.EXCHANGE_API_KEY ;
+
   var options = {
-    uri: `http://free.currencyconverterapi.com/api/v3/convert?q=${conversionBetween}&compact=y`,
+    uri: `http://free.currencyconverterapi.com/api/v3/convert?q=${conversionBetween}&compact=y&apiKey=${apiKey}`,
     json: true
   }
 

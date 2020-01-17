@@ -1,0 +1,1 @@
+To run in local execute <h3> serverless invoke local --function FUNCTION_NAME_FROM_SERVERLESS.YML </h3>

@@ -62,11 +62,17 @@ functions:
           path: getExchangeRate
           method: get
   transferFromUS:
-    handler: transfer.getRate
+    handler: transfer-from-usa.getRate
     events:
       - http:
           path: getTransferRate
           method: get
+  transerFromCanada:
+    handler: transfer-from-canada.getRate
+    events:
+      -http:
+        path: getTransferRate
+        method: get
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
