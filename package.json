@@ -12,11 +12,14 @@
     "debug": "^4.1.1",
     "express": "^4.16.4",
     "lambda-tester": "^3.5.0",
+    "node": "^13.6.0",
     "nodemon": "^1.11.0",
     "request": "^2.83.0",
     "request-promise": "^4.2.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "serverless": "^1.61.2"
+  },
   "scripts": {
     "test": "mocha"
   },

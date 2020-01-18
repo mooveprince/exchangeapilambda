@@ -1,3 +1,5 @@
+org: mooveprince2
+app: exchangeapi-app
 # Welcome to Serverless!
 #
 # This file is the main config file for your service.
@@ -19,7 +21,7 @@ service: exchangeapi # NOTE: update this with your service name
 
 provider:
   name: aws
-  runtime: nodejs8.10
+  runtime: nodejs12.x
 
 # you can overwrite defaults here
 #  stage: dev
@@ -70,9 +72,9 @@ functions:
   transerFromCanada:
     handler: transfer-from-canada.getRate
     events:
-      -http:
-        path: getTransferRate
-        method: get
+      - http:
+          path: getCanadaTransferRate
+          method: get
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events

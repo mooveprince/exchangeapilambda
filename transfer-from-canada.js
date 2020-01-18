@@ -13,7 +13,16 @@ var cadInrTransferDetails = function () {
     .then(function ($) {
         var transferDetails = [];
 
-        
+        $('.box.box-solid.bg-gray>.box-body>.row.text-center').each(function (i, ele) {
+            
+            if (ele) {
+                var agencyName = $(this).find('.small-box.bg-gray>a').first().text().trim();
+                var exchangeRate = $(this).find('.currRate').first().text().trim();
+
+                transferDetails.push ({exchangeRate: exchangeRate, agencyName: agencyName });
+
+            }
+        });
 
         return transferDetails.sort((a, b) => b.exchangeRate - a.exchangeRate);
     })
